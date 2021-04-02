@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:title="My Tasks"
+        android:icon="@drawable/ic_baseline_task_alt_24"
+        />
+
+    <item
+        android:id="@+id/taskMenuFragment"
+        android:title="Projects"
+        android:icon="@drawable/ic_baseline_space_dashboard_24"
+        />
+
+    <item
+        android:id="@+id/placeholder"
+        android:title="" />
+
+    <item
+        android:id="@+id/quickNoteFragment"
+        android:title="Quick"
+        android:icon="@drawable/ic_baseline_notes_24"
+        />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:title="Profile"
+        android:icon="@drawable/ic_baseline_account_box_24"
+        />
+
+
+</menu>
