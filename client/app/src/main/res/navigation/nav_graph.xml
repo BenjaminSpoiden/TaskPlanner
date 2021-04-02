@@ -7,32 +7,32 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.ben.taskplanner.HomeFragment"
-        android:label="Home"
+        android:name="com.ben.taskplanner.view.my_task.HomeFragment"
+        android:label="Task List"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/taskMenuFragment"
-        android:name="com.ben.taskplanner.TaskMenuFragment"
+        android:name="com.ben.taskplanner.view.task_menu.TaskMenuFragment"
         android:label="Projects"
         tools:layout="@layout/fragment_task_menu" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.ben.taskplanner.ProfileFragment"
+        android:name="com.ben.taskplanner.view.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/quickNoteFragment"
-        android:name="com.ben.taskplanner.QuickNoteFragment"
+        android:name="com.ben.taskplanner.view.quick_note.QuickNoteFragment"
         android:label="Quick Notes"
         tools:layout="@layout/fragment_quick_note" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.ben.taskplanner.LoginFragment"
+        android:name="com.ben.taskplanner.view.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.ben.taskplanner.RegisterFragment"
+        android:name="com.ben.taskplanner.view.register.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
 </navigation>

@@ -10,8 +10,10 @@
     <color name="blue">#0E4DA4</color>
     <color name="darker_blue">#0A3D83</color>
     <color name="lighter_blue">#1460C8</color>
+    <color name="shade_of_blue">#6074F9</color>
     <color name="dark_green">#263238</color>
     <color name="lighter">#F0F0F0</color>
+    <color name="light_gray">#B5B5B5</color>
     <color name="dark_gray">#979797</color>
     <color name="green_ish">#1BB55C</color>
     <color name="darker_green_ish">#148845</color>
