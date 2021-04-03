@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -11,10 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ben.taskplanner.R
 import com.ben.taskplanner.databinding.TodayTaskItemBinding
 import com.ben.taskplanner.model.TaskModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TaskRecyclerViewAdapter: RecyclerView.Adapter<TaskRecyclerViewAdapter.TaskRecyclerViewHolder>() {
 
     private val taskList: MutableList<TaskModel> = mutableListOf()
+    private val adapterScope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskRecyclerViewHolder = TaskRecyclerViewHolder.bind(parent, parent.context)
 
@@ -22,9 +28,16 @@ class TaskRecyclerViewAdapter: RecyclerView.Adapter<TaskRecyclerViewAdapter.Task
         holder.bind(taskList[position])
     }
 
-    fun addAll(taskList: List<TaskModel>) {
-        this.taskList.addAll(taskList)
-        notifyDataSetChanged()
+    fun addAll(taskListItem: List<TaskModel>) {
+        adapterScope.launch {
+            val groupedList = taskListItem.groupBy { it.date }.flatMap { it.value }
+            Log.d("Tag", "List: $groupedList")
+            withContext(Dispatchers.Main) {
+                taskList.addAll(groupedList)
+                notifyDataSetChanged()
+            }
+        }
+
     }
 
     fun add(taskItem: TaskModel, position: Int) {
@@ -58,7 +71,10 @@ class TaskRecyclerViewAdapter: RecyclerView.Adapter<TaskRecyclerViewAdapter.Task
         fun bind(taskItem: TaskModel) {
             binding.taskTitle.text = taskItem.title
             binding.taskTime.text = taskItem.date
-            taskState(taskItem.isCompleted)
+
+            binding.taskState.setOnCheckedChangeListener { _, isChecked ->
+                taskState(isChecked)
+            }
         }
 
         private fun taskState(isCompleted: Boolean) {
@@ -69,7 +85,7 @@ class TaskRecyclerViewAdapter: RecyclerView.Adapter<TaskRecyclerViewAdapter.Task
                     else
                         ColorStateList.valueOf(context.resources.getColor(R.color.shade_of_blue, context.theme))
 
-            binding.taskTitle.paintFlags = if(isCompleted) Paint.STRIKE_THRU_TEXT_FLAG else binding.taskTitle.paintFlags
+            binding.taskTitle.paintFlags = if(isCompleted) Paint.STRIKE_THRU_TEXT_FLAG else 0
             binding.taskTitle.setTextColor(
                     if(isCompleted)
                         ContextCompat.getColor(context, R.color.light_gray)
