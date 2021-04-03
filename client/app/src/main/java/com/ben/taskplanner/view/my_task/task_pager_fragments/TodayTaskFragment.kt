@@ -1,15 +1,14 @@
 package com.ben.taskplanner.view.my_task.task_pager_fragments
 
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ben.taskplanner.R
 import com.ben.taskplanner.databinding.FragmentTodayTaskBinding
 import com.ben.taskplanner.interfaces.RecyclerItemTouchHelperListener
 import com.ben.taskplanner.model.TaskModel
@@ -18,6 +17,9 @@ import com.ben.taskplanner.util.RecyclerItemTouchHelper
 import com.ben.taskplanner.view.BaseFragment
 import com.ben.taskplanner.view.my_task.TaskRecyclerViewAdapter
 import com.google.android.material.snackbar.Snackbar
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 
 class TodayTaskFragment : BaseFragment<FragmentTodayTaskBinding>(), RecyclerItemTouchHelperListener {
@@ -33,6 +35,7 @@ class TodayTaskFragment : BaseFragment<FragmentTodayTaskBinding>(), RecyclerItem
         return FragmentTodayTaskBinding.inflate(layoutInflater, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
@@ -53,16 +56,21 @@ class TodayTaskFragment : BaseFragment<FragmentTodayTaskBinding>(), RecyclerItem
         itemTouchHelper.attachToRecyclerView(taskRecyclerView)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun mockData() = listOf(
-        TaskModel(0, "Rendez-vous with Joe", false, TaskType.MEETING, "9h"),
-        TaskModel(1, "Rendez-vous with Joe", false, TaskType.MEETING, "9h"),
-        TaskModel(2, "Rendez-vous with Joe", true, TaskType.MEETING, "9h"),
-        TaskModel(3, "Rendez-vous with Joe", false, TaskType.MEETING, "9h"),
-        TaskModel(4, "Rendez-vous with Joe", false, TaskType.MEETING, "9h")
+        TaskModel(0, "Rendez-vous with Joe", false, TaskType.MEETING, now()),
+        TaskModel(1, "Rendez-vous with Joe", false, TaskType.MEETING, now()),
+        TaskModel(2, "Rendez-vous with Joe", true, TaskType.MEETING, now()),
+        TaskModel(3, "Rendez-vous with Joe", false, TaskType.MEETING, now()),
+        TaskModel(4, "Rendez-vous with Joe", false, TaskType.MEETING, now())
     )
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun now() = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
 
     private fun swipeGesturesForRecyclerView() = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this)
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int, position: Int) {
         if(viewHolder is TaskRecyclerViewAdapter.TaskRecyclerViewHolder) {
             val name = mockData()[viewHolder.adapterPosition].title
