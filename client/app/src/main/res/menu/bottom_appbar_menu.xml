@@ -15,10 +15,6 @@
         />
 
     <item
-        android:id="@+id/placeholder"
-        android:title="" />
-
-    <item
         android:id="@+id/quickNoteFragment"
         android:title="Quick"
         android:icon="@drawable/ic_baseline_notes_24"

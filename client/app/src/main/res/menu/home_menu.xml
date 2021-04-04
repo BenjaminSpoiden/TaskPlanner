@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single" >
+        <item
+            android:id="@+id/filterList"
+            app:showAsAction="ifRoom"
+            android:title="Filter"
+            android:icon="@drawable/ic_baseline_filter_list_24"
+            android:iconTint="@color/white"
+            >
+            <menu>
+                <item
+                    android:id="@+id/highPriority"
+                    android:title="High Priority"
+                    />
+                <item
+                    android:id="@+id/mediumPriority"
+                    android:title="Medium Priority"
+                    />
+                <item
+                    android:id="@+id/lowPriority"
+                    android:title="Low Priority"
+                    />
+
+            </menu>
+
+        </item>
+    </group>
+
+</menu>
