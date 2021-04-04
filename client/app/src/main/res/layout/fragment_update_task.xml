@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.add_task.AddTaskFragment">
+    tools:context=".view.my_task.AddTaskFragment">
 
     <View
         android:id="@+id/topView"

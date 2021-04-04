@@ -11,51 +11,55 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ben.taskplanner.R
 import com.ben.taskplanner.databinding.TodayTaskItemBinding
+import com.ben.taskplanner.model.Priority
 import com.ben.taskplanner.model.TaskModel
+import com.ben.taskplanner.view.BaseAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class TaskRecyclerViewAdapter: RecyclerView.Adapter<TaskRecyclerViewAdapter.TaskRecyclerViewHolder>() {
+class TaskRecyclerViewAdapter: BaseAdapter<TaskRecyclerViewAdapter.TaskRecyclerViewHolder, TaskModel>() {
 
-    private val taskList: MutableList<TaskModel> = mutableListOf()
+    companion object {
+        var onItemClickListener: ((item: TaskModel) -> Unit)? = null
+    }
+
     private val adapterScope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskRecyclerViewHolder = TaskRecyclerViewHolder.bind(parent, parent.context)
 
     override fun onBindViewHolder(holder: TaskRecyclerViewHolder, position: Int) {
-        holder.bind(taskList[position])
+        holder.bind(itemList[position])
     }
 
-    fun addAll(taskListItem: List<TaskModel>) {
+    override fun addAll(items: List<TaskModel>) {
         adapterScope.launch {
-            val groupedList = taskListItem.groupBy { it.date }.flatMap { it.value }
+            val groupedList = items.groupBy { it.date }.flatMap { it.value }
             Log.d("Tag", "List: $groupedList")
             withContext(Dispatchers.Main) {
-                taskList.addAll(groupedList)
+                itemList.addAll(groupedList)
                 notifyDataSetChanged()
             }
         }
-
     }
 
-    fun add(taskItem: TaskModel, position: Int) {
-        this.taskList.add(taskItem)
+    override fun add(item: TaskModel, position: Int) {
+        this.itemList.add(item)
         notifyItemInserted(position)
     }
 
-    fun removeItem(position: Int) {
-        this.taskList.removeAt(position)
+    override fun removeItem(position: Int) {
+        this.itemList.removeAt(position)
         notifyItemRemoved(position)
     }
 
-    fun restoreItem(taskItem: TaskModel, position: Int) {
-        this.taskList.add(position, taskItem)
+    override fun restoreItem(item: TaskModel, position: Int) {
+        this.itemList.add(position, item)
         notifyItemInserted(position)
     }
 
-    override fun getItemCount(): Int = taskList.size
+    override fun getItemCount(): Int = itemList.size
 
     class TaskRecyclerViewHolder private constructor(private val binding: TodayTaskItemBinding, private val context: Context): RecyclerView.ViewHolder(binding.root) {
         companion object {
@@ -75,6 +79,22 @@ class TaskRecyclerViewAdapter: RecyclerView.Adapter<TaskRecyclerViewAdapter.Task
             binding.taskState.setOnCheckedChangeListener { _, isChecked ->
                 taskState(isChecked)
             }
+
+            binding.cardRoot.setOnClickListener {
+                onItemClickListener?.invoke(taskItem)
+            }
+
+            when(taskItem.priority) {
+                Priority.HIGH -> {
+                    binding.priorityIndicator.imageTintList = ColorStateList.valueOf(Color.parseColor(taskItem.priority.color))
+                }
+                Priority.MEDIUM -> {
+                    binding.priorityIndicator.imageTintList = ColorStateList.valueOf(Color.parseColor(taskItem.priority.color))
+                }
+                Priority.LOW -> {
+                    binding.priorityIndicator.imageTintList = ColorStateList.valueOf(Color.parseColor(taskItem.priority.color))
+                }
+            }
         }
 
         private fun taskState(isCompleted: Boolean) {
@@ -92,6 +112,17 @@ class TaskRecyclerViewAdapter: RecyclerView.Adapter<TaskRecyclerViewAdapter.Task
                     else
                         ContextCompat.getColor(context, R.color.black)
             )
+
+            binding.taskDesc.paintFlags = if(isCompleted) Paint.STRIKE_THRU_TEXT_FLAG else 0
+            binding.taskDesc.setTextColor(
+                if(isCompleted)
+                    ContextCompat.getColor(context, R.color.light_gray)
+                else
+                    ContextCompat.getColor(context, R.color.black)
+            )
+
+            binding.taskTime.paintFlags = if(isCompleted) Paint.STRIKE_THRU_TEXT_FLAG else 0
+
             binding.cardDecorator.setBackgroundColor(
                     if(isCompleted)
                         ContextCompat.getColor(context, R.color.red_ish)

@@ -1,4 +1,4 @@
-package com.ben.taskplanner.view.update_task
+package com.ben.taskplanner.view.my_task
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

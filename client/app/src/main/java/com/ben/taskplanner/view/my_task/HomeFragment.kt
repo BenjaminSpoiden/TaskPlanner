@@ -2,6 +2,7 @@ package com.ben.taskplanner.view.my_task
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ben.taskplanner.R
 import com.ben.taskplanner.databinding.FragmentHomeBinding
 import com.ben.taskplanner.interfaces.RecyclerItemTouchHelperListener
+import com.ben.taskplanner.model.Day
+import com.ben.taskplanner.model.Priority
 import com.ben.taskplanner.model.TaskModel
 import com.ben.taskplanner.model.TaskType
 import com.ben.taskplanner.util.RecyclerItemTouchHelper
@@ -23,7 +26,10 @@ import java.time.format.FormatStyle
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), RecyclerItemTouchHelperListener {
 
     private val taskRecyclerView: RecyclerView by lazy { binding.todayTaskRv }
+    private val dayRecyclerView: RecyclerView by lazy { binding.dayRv }
+
     private val taskRecyclerViewAdapter: TaskRecyclerViewAdapter by lazy { TaskRecyclerViewAdapter() }
+    private val dayRecyclerViewAdapter: DayRecyclerViewAdapter by lazy { DayRecyclerViewAdapter() }
 
     override fun bindFragment(
         layoutInflater: LayoutInflater,
@@ -38,13 +44,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RecyclerItemTouchHelpe
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         setupRecyclerView()
-//        taskRecyclerViewAdapter.addAll(mockData())
+        taskRecyclerViewAdapter.addAll(mockData())
+        dayRecyclerViewAdapter.addAll(daysMockData())
 
         binding.addBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_addTaskFragment)
         }
 
-        binding.root.setOnClickListener {
+
+        TaskRecyclerViewAdapter.onItemClickListener = {
+            Log.d("Tag", "$it")
             findNavController().navigate(R.id.action_homeFragment_to_updateTaskFragment)
         }
     }
@@ -56,6 +65,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RecyclerItemTouchHelpe
 
     private fun setupRecyclerView() {
         val itemTouchHelper = ItemTouchHelper(swipeGesturesForRecyclerView())
+        dayRecyclerView.apply {
+            this.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            this.adapter = dayRecyclerViewAdapter
+        }
         taskRecyclerView.apply {
             this.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             this.adapter = taskRecyclerViewAdapter
@@ -65,11 +78,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RecyclerItemTouchHelpe
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun mockData() = listOf(
-            TaskModel(0, "Rendez-vous with Joe", false, TaskType.MEETING, now()),
-            TaskModel(1, "Rendez-vous with Joe", false, TaskType.MEETING, now()),
-            TaskModel(2, "Rendez-vous with Joe", true, TaskType.MEETING, now()),
-            TaskModel(3, "Rendez-vous with Joe", false, TaskType.MEETING, now()),
-            TaskModel(4, "Rendez-vous with Joe", false, TaskType.MEETING, now())
+            TaskModel(0, "Rendez-vous with Joe", false, TaskType.MEETING, now(), Priority.HIGH),
+            TaskModel(1, "Rendez-vous with Joe", false, TaskType.MEETING, now(), Priority.LOW),
+            TaskModel(2, "Rendez-vous with Joe", true, TaskType.MEETING, now(), Priority.MEDIUM),
+            TaskModel(3, "Rendez-vous with Joe", false, TaskType.MEETING, now(), Priority.LOW),
+            TaskModel(4, "Rendez-vous with Joe", false, TaskType.MEETING, now(), Priority.MEDIUM)
+    )
+
+    private fun daysMockData() = listOf(
+        Day("M", 12),
+        Day("T", 13),
+        Day("W", 14),
+        Day("T", 15),
+        Day("F", 16),
+        Day("S", 17),
+        Day("S", 18),
+        Day("L", 19),
+        Day("T", 20),
     )
 
     @RequiresApi(Build.VERSION_CODES.O)

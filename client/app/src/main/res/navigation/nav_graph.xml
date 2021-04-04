@@ -52,7 +52,7 @@
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/addTaskFragment"
-        android:name="com.ben.taskplanner.view.add_task.AddTaskFragment"
+        android:name="com.ben.taskplanner.view.my_task.AddTaskFragment"
         android:label="Add Task"
         tools:layout="@layout/fragment_add_task" >
         <action
@@ -65,7 +65,7 @@
     </fragment>
     <fragment
         android:id="@+id/updateTaskFragment"
-        android:name="com.ben.taskplanner.view.update_task.UpdateTaskFragment"
+        android:name="com.ben.taskplanner.view.my_task.UpdateTaskFragment"
         android:label="Update Task"
         tools:layout="@layout/fragment_update_task" >
         <action

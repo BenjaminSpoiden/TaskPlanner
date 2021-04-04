@@ -7,11 +7,43 @@
     android:id="@+id/root"
     tools:context=".view.my_task.HomeFragment">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_light"
+        android:gravity="center"
+        android:text="August 2021"
+        android:textColor="@color/dark_green"
+        android:padding="8dp"
+        android:textSize="20sp" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/day_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:cardElevation="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/day_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            tools:listitem="@layout/day_item"
+            />
+
+    </com.google.android.material.card.MaterialCardView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/today_task_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/today_task_item" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/day_layout"
+        tools:listitem="@layout/today_task_item"
+        />
 
     <ImageView
         android:id="@+id/placeholderImage"
