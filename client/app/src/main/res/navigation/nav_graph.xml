@@ -24,6 +24,13 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_filterListDialogFragment"
+            app:destination="@id/filterListDialogFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
     <fragment
         android:id="@+id/taskMenuFragment"
@@ -76,4 +83,13 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
     </fragment>
+    <dialog
+        android:id="@+id/filterListDialogFragment"
+        android:name="com.ben.taskplanner.FilterListDialogFragment"
+        android:label="fragment_filter_list_dialog"
+        tools:layout="@layout/fragment_filter_list_dialog" >
+        <action
+            android:id="@+id/action_filterListDialogFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </dialog>
 </navigation>

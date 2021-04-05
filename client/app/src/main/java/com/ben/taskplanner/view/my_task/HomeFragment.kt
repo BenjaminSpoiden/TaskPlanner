@@ -63,6 +63,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RecyclerItemTouchHelpe
         inflater.inflate(R.menu.home_menu, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.filterList -> {
+                findNavController().navigate(R.id.action_homeFragment_to_filterListDialogFragment)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+
     private fun setupRecyclerView() {
         val itemTouchHelper = ItemTouchHelper(swipeGesturesForRecyclerView())
         dayRecyclerView.apply {
@@ -78,11 +89,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RecyclerItemTouchHelpe
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun mockData() = listOf(
-            TaskModel(0, "Rendez-vous with Joe", false, TaskType.MEETING, now(), Priority.HIGH),
-            TaskModel(1, "Rendez-vous with Joe", false, TaskType.MEETING, now(), Priority.LOW),
-            TaskModel(2, "Rendez-vous with Joe", true, TaskType.MEETING, now(), Priority.MEDIUM),
-            TaskModel(3, "Rendez-vous with Joe", false, TaskType.MEETING, now(), Priority.LOW),
-            TaskModel(4, "Rendez-vous with Joe", false, TaskType.MEETING, now(), Priority.MEDIUM)
+            TaskModel(0, "Rendez-vous with Joe", false, now(), Priority.HIGH),
+            TaskModel(1, "Rendez-vous with Joe", false, now(), Priority.LOW),
+            TaskModel(2, "Rendez-vous with Joe", true, now(), Priority.MEDIUM),
+            TaskModel(3, "Rendez-vous with Joe", false, now(), Priority.LOW),
+            TaskModel(4, "Rendez-vous with Joe", false, now(), Priority.MEDIUM)
     )
 
     private fun daysMockData() = listOf(
