@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bottomNavBarConfig()
+        supportActionBar?.elevation = 0F
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -25,9 +26,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bottomNavBarConfig() {
-        bottomNavigationView.background = null
-        bottomNavigationView.itemRippleColor = null
-
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.taskMenuFragment, R.id.quickNoteFragment, R.id.profileFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNavigationView.setupWithNavController(navController)

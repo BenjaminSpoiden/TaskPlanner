@@ -16,4 +16,8 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="no_data">No data available…</string>
+    <string name="placeholderimage">placeholderImage</string>
+    <string name="add_a_new_task">Add a new task</string>
+    <string name="update_an_existing_task">Update an existing task</string>
 </resources>

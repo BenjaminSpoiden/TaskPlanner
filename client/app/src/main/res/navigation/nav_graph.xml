@@ -7,32 +7,89 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.ben.taskplanner.HomeFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        android:name="com.ben.taskplanner.view.my_task.HomeFragment"
+        android:label="Task List"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_updateTaskFragment"
+            app:destination="@id/updateTaskFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_filterListDialogFragment"
+            app:destination="@id/filterListDialogFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+    </fragment>
     <fragment
         android:id="@+id/taskMenuFragment"
-        android:name="com.ben.taskplanner.TaskMenuFragment"
+        android:name="com.ben.taskplanner.view.task_menu.TaskMenuFragment"
         android:label="Projects"
         tools:layout="@layout/fragment_task_menu" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.ben.taskplanner.ProfileFragment"
+        android:name="com.ben.taskplanner.view.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/quickNoteFragment"
-        android:name="com.ben.taskplanner.QuickNoteFragment"
+        android:name="com.ben.taskplanner.view.quick_note.QuickNoteFragment"
         android:label="Quick Notes"
         tools:layout="@layout/fragment_quick_note" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.ben.taskplanner.LoginFragment"
-        android:label="fragment_login"
+        android:name="com.ben.taskplanner.view.login.LoginFragment"
+        android:label="Login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.ben.taskplanner.RegisterFragment"
-        android:label="fragment_register"
+        android:name="com.ben.taskplanner.view.register.RegisterFragment"
+        android:label="Register"
         tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/addTaskFragment"
+        android:name="com.ben.taskplanner.view.my_task.AddTaskFragment"
+        android:label="Add Task"
+        tools:layout="@layout/fragment_add_task" >
+        <action
+            android:id="@+id/action_addTaskFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateTaskFragment"
+        android:name="com.ben.taskplanner.view.my_task.UpdateTaskFragment"
+        android:label="Update Task"
+        tools:layout="@layout/fragment_update_task" >
+        <action
+            android:id="@+id/action_updateTaskFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <dialog
+        android:id="@+id/filterListDialogFragment"
+        android:name="com.ben.taskplanner.FilterListDialogFragment"
+        android:label="fragment_filter_list_dialog"
+        tools:layout="@layout/fragment_filter_list_dialog" >
+        <action
+            android:id="@+id/action_filterListDialogFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </dialog>
 </navigation>
