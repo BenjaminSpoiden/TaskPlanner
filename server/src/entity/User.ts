@@ -1,6 +1,6 @@
 import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import argon2 from "argon2"
-import { IsEmail, IsNotEmpty, MinLength, validate } from "class-validator"
+import { IsEmail, IsNotEmpty, MinLength } from "class-validator"
 
 @Entity("user")
 export class User extends BaseEntity {
@@ -57,16 +57,4 @@ export class User extends BaseEntity {
         }
     }
 
-    static async onCreateUser(email: string, password: string, name: string, surname: string) {
-        const user = User.create({ email, password, name, surname })
-        const errors = await validate(user)
-
-        if(errors.length > 0) {
-            return {...errors[0].constraints}
-        }
-        user.save().catch(e => {
-            throw new Error(e)
-        })
-        return user
-    }
 }

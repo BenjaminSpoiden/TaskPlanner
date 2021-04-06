@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 dotenv.config()
 import { createConnection } from "typeorm"
 import AuthRoutes from "./routes/AuthRoutes"
+import TasksRoutes from './routes/TasksRoutes'
 
 const main = async () => {
 
@@ -20,6 +21,7 @@ const main = async () => {
     })
 
     app.use(AuthRoutes)
+    app.use(TasksRoutes)
 
     app.listen(PORT, () => {
         console.log(`Server Ready at http://localhost:${PORT}`)
