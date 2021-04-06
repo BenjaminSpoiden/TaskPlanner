@@ -3,6 +3,7 @@ import express from "express"
 import dotenv from "dotenv"
 dotenv.config()
 import { createConnection } from "typeorm"
+import AuthRoutes from "./routes/AuthRoutes"
 
 const main = async () => {
 
@@ -17,6 +18,8 @@ const main = async () => {
     app.get("/", (_, res) => {
         res.send({response: "Hello Server"})
     })
+
+    app.use(AuthRoutes)
 
     app.listen(PORT, () => {
         console.log(`Server Ready at http://localhost:${PORT}`)
