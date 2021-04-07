@@ -15,6 +15,7 @@ export const Authorization = (req: Request, res: Response, next: NextFunction) =
         //@ts-ignore
         req.user = user
         next()
+        return
     }catch(e) {
         return res.status(403).json({ message: "The token is not valid." })
     }

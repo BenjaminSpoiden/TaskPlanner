@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { Authorization } from "../middlewares/Authorization"
-import { fetchTasks } from "../controllers/tasks/FetchTasks"
+import { fetchTasks } from "../controllers/tasks"
 
 const router = Router()
 
