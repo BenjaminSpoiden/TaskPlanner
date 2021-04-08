@@ -1,13 +1,12 @@
 import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import argon2 from "argon2"
-import { IsEmail, IsNotEmpty, MinLength, validate } from "class-validator"
-import { CreateUserInput } from "src/model/CreateUserInput";
+import { IsEmail, IsNotEmpty, MinLength } from "class-validator"
 
 @Entity("user")
 export class User extends BaseEntity {
 
-    @PrimaryGeneratedColumn()
-    id: number
+    @PrimaryGeneratedColumn("uuid")
+    id: string
 
     @Column({unique: true})
     @IsEmail({}, {message: "Please enter your email."})
@@ -41,24 +40,21 @@ export class User extends BaseEntity {
 
     static async onLogin(email: string, password: string) {
         const user = await User.findOne({ email })
-        if(!user) throw new Error("No user found with this email.")
+        if(!user) return {
+            error: "No user found with this email.",
+            data: null
+        }
 
         const comparePassword = await argon2.verify(user.password, password)
-        if(!comparePassword) throw new Error("The password did not match.")
-
-        return user
-    }
-
-    static async onCreateUser({email, password, name, surname}: CreateUserInput) {
-        const user = User.create({ email, password, name, surname })
-        const errors = await validate(user)
-
-        if(errors.length > 0) {
-            return {...errors[0].constraints}
+        if(!comparePassword) return {
+            error: "The password did not match.",
+            data: null
         }
-        user.save().catch(e => {
-            throw new Error(e)
-        })
-        return user
+
+        return {
+            error: null,
+            data: user
+        }
     }
+
 }
