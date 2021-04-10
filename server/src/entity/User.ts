@@ -1,6 +1,7 @@
 import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import argon2 from "argon2"
 import { IsEmail, IsNotEmpty, MinLength } from "class-validator"
+import { UserResponse } from "../model/UserResponse";
 
 @Entity("user")
 export class User extends BaseEntity {
@@ -38,22 +39,22 @@ export class User extends BaseEntity {
         this.password = await argon2.hash(this.password)
     }
 
-    static async onLogin(email: string, password: string) {
+    static async onLogin(email: string, password: string): Promise<UserResponse> {
         const user = await User.findOne({ email })
         if(!user) return {
             error: "No user found with this email.",
-            data: null
+            user: null
         }
 
         const comparePassword = await argon2.verify(user.password, password)
         if(!comparePassword) return {
             error: "The password did not match.",
-            data: null
+            user: null
         }
 
         return {
             error: null,
-            data: user
+            user: user
         }
     }
 
