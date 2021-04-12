@@ -19,11 +19,13 @@ import com.ben.taskplanner.model.TaskType
 import com.ben.taskplanner.util.RecyclerItemTouchHelper
 import com.ben.taskplanner.view.BaseFragment
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(), RecyclerItemTouchHelperListener {
+@AndroidEntryPoint
+class HomeFragment : BaseFragment<FragmentHomeBinding, MyTaskViewModel>(), RecyclerItemTouchHelperListener {
 
     private val taskRecyclerView: RecyclerView by lazy { binding.todayTaskRv }
     private val dayRecyclerView: RecyclerView by lazy { binding.dayRv }
@@ -38,6 +40,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RecyclerItemTouchHelpe
     ): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater, container, false)
     }
+
+    override fun bindViewModel(): Class<MyTaskViewModel> = MyTaskViewModel::class.java
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

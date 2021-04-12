@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -85,7 +85,7 @@
     </fragment>
     <dialog
         android:id="@+id/filterListDialogFragment"
-        android:name="com.ben.taskplanner.FilterListDialogFragment"
+        android:name="com.ben.taskplanner.view.FilterListDialogFragment"
         android:label="fragment_filter_list_dialog"
         tools:layout="@layout/fragment_filter_list_dialog" >
         <action

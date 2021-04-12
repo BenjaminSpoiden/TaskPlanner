@@ -1,4 +1,4 @@
-package com.ben.taskplanner
+package com.ben.taskplanner.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

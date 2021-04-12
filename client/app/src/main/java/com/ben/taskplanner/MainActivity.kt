@@ -2,6 +2,7 @@ package com.ben.taskplanner
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -31,5 +32,20 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.taskMenuFragment, R.id.quickNoteFragment, R.id.profileFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNavigationView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when(destination.id) {
+                R.id.loginFragment -> hideBottomBar()
+                else -> showBottomBar()
+            }
+        }
+    }
+
+    private fun hideBottomBar() {
+        bottomNavigationView.visibility = View.GONE
+    }
+
+    private fun showBottomBar() {
+        bottomNavigationView.visibility = View.VISIBLE
     }
 }
