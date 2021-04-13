@@ -1,4 +1,4 @@
-package com.ben.taskplanner.view.register
+package com.ben.taskplanner.view.credentials
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

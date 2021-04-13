@@ -29,14 +29,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bottomNavBarConfig() {
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.taskMenuFragment, R.id.quickNoteFragment, R.id.profileFragment))
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.homeFragment,
+            R.id.taskMenuFragment,
+            R.id.quickNoteFragment,
+            R.id.profileFragment,
+            R.id.credentialsFragment
+        ))
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNavigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
-                R.id.loginFragment -> hideBottomBar()
-                else -> showBottomBar()
+                R.id.loginFragment -> {
+                    hideBottomBar()
+                }
+                R.id.credentialsFragment -> {
+                    hideBottomBar()
+                }
+                R.id.registerFragment -> {
+                    hideBottomBar()
+                }
+                else -> {
+                    showBottomBar()
+                }
             }
         }
     }

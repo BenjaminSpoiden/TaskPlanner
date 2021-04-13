@@ -1,4 +1,4 @@
-package com.ben.taskplanner.view.login
+package com.ben.taskplanner.view.credentials
 
 import androidx.lifecycle.*
 import com.ben.taskplanner.model.ResponseHandler

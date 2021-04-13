@@ -1,34 +1,20 @@
-package com.ben.taskplanner.view.login
+package com.ben.taskplanner.view.credentials
 
-import android.app.Activity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.ben.taskplanner.R
 import com.ben.taskplanner.databinding.FragmentLoginBinding
 import com.ben.taskplanner.model.ResponseHandler
 import com.ben.taskplanner.model.user.LoginUserModel
-import com.ben.taskplanner.model.user.User
 import com.ben.taskplanner.model.user.UserResponse
-import com.ben.taskplanner.repository.TaskPlannerRepository
 import com.ben.taskplanner.view.BaseFragment
-import com.ben.taskplanner.view.ViewModelFactory
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import kotlin.math.log
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
@@ -57,9 +43,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
     private fun setInputs() {
         binding.emailInput.editText?.addTextChangedListener {
             viewModel.setEmail(it.toString())
+            binding.emailInput.error = null
         }
         binding.passwordInput.editText?.addTextChangedListener {
             viewModel.setPassword(it.toString())
+            binding.passwordInput.error = null
         }
     }
 
@@ -75,11 +63,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         viewModel.response.observe(viewLifecycleOwner) {
             when(it) {
                 is ResponseHandler.SuccessResponse -> {
-                    Log.d("Tag", "Success: ${it.response}")
+                    Log.d("Tag", "Success: ${it.response.user}")
                 }
                 is ResponseHandler.FailureResponse -> {
                     val failureResponse = onConvertResponseToModelClass<UserResponse>(it.responseBody)
-                    Log.d("Tag", "Failure: $failureResponse")
+                    failureResponse?.error?.let { errorResponse ->
+                        if(errorResponse.toString().contains("passwords")) {
+                            binding.passwordInput.error = errorResponse.toString()
+                        } else {
+                            binding.emailInput.error = errorResponse.toString()
+                        }
+                    }
                 }
                 is ResponseHandler.Loading -> {
                     Log.d("Tag", "Loading...")
