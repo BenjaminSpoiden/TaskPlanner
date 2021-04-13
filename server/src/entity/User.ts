@@ -48,7 +48,7 @@ export class User extends BaseEntity {
 
         const comparePassword = await argon2.verify(user.password, password)
         if(!comparePassword) return {
-            error: "The password did not match.",
+            error: "The passwords did not match.",
             user: null
         }
 
