@@ -6,12 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.ben.taskplanner.R
 import com.ben.taskplanner.databinding.FragmentLoginBinding
 import com.ben.taskplanner.model.ResponseHandler
 import com.ben.taskplanner.model.user.LoginUserModel
 import com.ben.taskplanner.model.user.UserResponse
 import com.ben.taskplanner.view.BaseFragment
+import com.ben.taskplanner.view.SharedTokenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -22,6 +26,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
     override fun bindFragment(layoutInflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): FragmentLoginBinding {
         return FragmentLoginBinding.inflate(layoutInflater, container, false)
     }
+
+    private val sharedTokenViewModel: SharedTokenViewModel by viewModels()
 
     override fun bindViewModel(): Class<LoginViewModel> = LoginViewModel::class.java
 
@@ -63,7 +69,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         viewModel.response.observe(viewLifecycleOwner) {
             when(it) {
                 is ResponseHandler.SuccessResponse -> {
-                    Log.d("Tag", "Success: ${it.response.user}")
+                    sharedTokenViewModel.writeAccessToken(it.response.user)
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 }
                 is ResponseHandler.FailureResponse -> {
                     val failureResponse = onConvertResponseToModelClass<UserResponse>(it.responseBody)

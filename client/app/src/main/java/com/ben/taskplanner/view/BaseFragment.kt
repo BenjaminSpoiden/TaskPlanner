@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.ben.taskplanner.repository.TaskPlannerRepository
+import com.ben.taskplanner.util.TaskPlannerDataStore
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.ResponseBody
@@ -19,12 +20,13 @@ import javax.inject.Inject
 abstract class BaseFragment<VB: ViewBinding, VM: ViewModel>: Fragment() {
 
     @Inject lateinit var taskPlannerRepository: TaskPlannerRepository
+    @Inject lateinit var taskPlannerDataStore: TaskPlannerDataStore
     @Inject lateinit var gson: Gson
 
     private var _binding: VB? = null
     protected val binding get() = _binding!!
     protected val viewModel: VM by lazy {
-        val viewModelFactory = ViewModelFactory(taskPlannerRepository)
+        val viewModelFactory = ViewModelFactory(taskPlannerRepository, taskPlannerDataStore)
         ViewModelProvider(this, viewModelFactory).get(bindViewModel())
     }
 

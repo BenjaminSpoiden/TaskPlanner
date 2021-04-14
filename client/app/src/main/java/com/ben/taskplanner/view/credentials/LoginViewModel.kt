@@ -5,14 +5,18 @@ import com.ben.taskplanner.model.ResponseHandler
 import com.ben.taskplanner.model.user.LoginUserModel
 import com.ben.taskplanner.model.user.UserResponse
 import com.ben.taskplanner.repository.TaskPlannerRepository
+import com.ben.taskplanner.util.TaskPlannerDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val taskPlannerRepository: TaskPlannerRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val taskPlannerRepository: TaskPlannerRepository
+) : ViewModel() {
 
     private val _email: MutableStateFlow<String> = MutableStateFlow("")
     private val _password: MutableStateFlow<String> = MutableStateFlow("")
