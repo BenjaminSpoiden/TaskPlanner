@@ -27,6 +27,9 @@ export class User extends BaseEntity {
     @IsNotEmpty({message: "Please enter your surname."})
     surname: string
 
+    @Column({nullable: true})
+    avatar?: string
+
     @CreateDateColumn({name: "created_at"})
     createdAt: Date
 
