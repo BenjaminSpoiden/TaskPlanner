@@ -30,7 +30,7 @@ class TaskPlannerDataStore @Inject constructor(@ApplicationContext private val c
 
     suspend fun saveAccessToken(accessToken: String) {
         dataStore.edit {
-            it[PreferenceKey.accessToken] = accessToken
+            it[PreferenceKey.accessToken] = "Bearer $accessToken"
         }
     }
 
