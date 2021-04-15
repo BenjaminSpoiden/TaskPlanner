@@ -50,11 +50,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                 }
             }
         }
+
+        binding.logout.setOnClickListener {
+            sharedTokenViewModel.logOut()
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun updateUI(user: User) {
         binding.displayName.text = "${user.name} ${user.surname}"
         binding.displayEmail.text = user.email
+
     }
 }
