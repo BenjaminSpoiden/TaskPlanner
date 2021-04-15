@@ -1,5 +1,6 @@
 package com.ben.taskplanner.view.profile
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.ben.taskplanner.databinding.FragmentProfileBinding
 import com.ben.taskplanner.model.ResponseHandler
+import com.ben.taskplanner.model.user.User
 import com.ben.taskplanner.view.BaseFragment
 import com.ben.taskplanner.view.SharedTokenViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +38,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             Log.d("Tag", "TEST two")
             when(it) {
                 is ResponseHandler.SuccessResponse -> {
-                    Log.d("Tag", "Success: ${it.response.user}")
+                    it.response.user?.let { user ->
+                        updateUI(user = user)
+                    }
                 }
                 is ResponseHandler.FailureResponse -> {
                     Log.d("Tag", "Failure: ${it.responseBody?.string()}")
@@ -46,5 +50,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                 }
             }
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateUI(user: User) {
+        binding.displayName.text = "${user.name} ${user.surname}"
+        binding.displayEmail.text = user.email
     }
 }
