@@ -8,17 +8,13 @@ export const Authorization = (req: Request, res: Response, next: NextFunction) =
 
     if(!accessToken) return res.status(403).json({ message: "You are not authorized." })
 
-    try {
-        //@ts-ignore
-        const user = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
+    
+    //@ts-ignore
+    const user = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (error, user) => {
 
+        if(error) return res.status(403).json({ message: "The token is not valid." })
         //@ts-ignore
         req.user = user
         next()
-        return
-    }catch(e) {
-        return res.status(403).json({ message: "The token is not valid." })
-    }
-    
-
+    })
 }

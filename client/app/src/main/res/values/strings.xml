@@ -20,4 +20,5 @@
     <string name="placeholderimage">placeholderImage</string>
     <string name="add_a_new_task">Add a new task</string>
     <string name="update_an_existing_task">Update an existing task</string>
+    <string name="create_account">Create an account on TaskPlanner</string>
 </resources>

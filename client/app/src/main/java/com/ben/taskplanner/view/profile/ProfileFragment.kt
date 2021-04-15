@@ -1,60 +1,65 @@
 package com.ben.taskplanner.view.profile
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ben.taskplanner.R
+import androidx.fragment.app.viewModels
+import com.ben.taskplanner.databinding.FragmentProfileBinding
+import com.ben.taskplanner.model.ResponseHandler
+import com.ben.taskplanner.model.user.User
+import com.ben.taskplanner.view.BaseFragment
+import com.ben.taskplanner.view.SharedTokenViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private val sharedTokenViewModel by viewModels<SharedTokenViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun bindFragment(layoutInflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): FragmentProfileBinding {
+        return FragmentProfileBinding.inflate(layoutInflater, container, false)
+    }
+    override fun bindViewModel(): Class<ProfileViewModel> = ProfileViewModel::class.java
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d("Tag", "TEST one")
+        sharedTokenViewModel.readAccessToken().observe(viewLifecycleOwner) { accessToken ->
+            accessToken?.let {
+                viewModel.getCurrentUser(it)
+            }
+        }
+
+        viewModel.user.observe(viewLifecycleOwner) {
+            Log.d("Tag", "TEST two")
+            when(it) {
+                is ResponseHandler.SuccessResponse -> {
+                    it.response.user?.let { user ->
+                        updateUI(user = user)
+                    }
+                }
+                is ResponseHandler.FailureResponse -> {
+                    Log.d("Tag", "Failure: ${it.responseBody?.string()}")
+                }
+                is ResponseHandler.Loading -> {
+                    Log.d("Tag", "Loading...")
+                }
+            }
+        }
+
+        binding.logout.setOnClickListener {
+            sharedTokenViewModel.logOut()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
-    }
+    @SuppressLint("SetTextI18n")
+    private fun updateUI(user: User) {
+        binding.displayName.text = "${user.name} ${user.surname}"
+        binding.displayEmail.text = user.email
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

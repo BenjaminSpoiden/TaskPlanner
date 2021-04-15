@@ -20,12 +20,17 @@ export class User extends BaseEntity {
     password: string
 
     @Column()
+    @MinLength(2, {message: "The name must be atleast 2 characters"})
     @IsNotEmpty({message: "Please enter your first name."})
     name: string
 
     @Column()
+    @MinLength(2, {message: "The surname must be atleast 2 characters"})
     @IsNotEmpty({message: "Please enter your surname."})
     surname: string
+
+    @Column({nullable: true})
+    avatar?: string
 
     @CreateDateColumn({name: "created_at"})
     createdAt: Date
@@ -48,7 +53,7 @@ export class User extends BaseEntity {
 
         const comparePassword = await argon2.verify(user.password, password)
         if(!comparePassword) return {
-            error: "The password did not match.",
+            error: "The passwords did not match.",
             user: null
         }
 
