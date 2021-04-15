@@ -20,10 +20,12 @@ export class User extends BaseEntity {
     password: string
 
     @Column()
+    @MinLength(2, {message: "The name must be atleast 2 characters"})
     @IsNotEmpty({message: "Please enter your first name."})
     name: string
 
     @Column()
+    @MinLength(2, {message: "The surname must be atleast 2 characters"})
     @IsNotEmpty({message: "Please enter your surname."})
     surname: string
 
