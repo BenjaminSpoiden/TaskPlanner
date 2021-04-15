@@ -4,29 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.ben.taskplanner.repository.TaskPlannerRepository
+import com.ben.taskplanner.repository.AuthRepository
+import com.ben.taskplanner.repository.UserRepository
 import com.ben.taskplanner.util.TaskPlannerDataStore
 import com.google.gson.Gson
-import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.ResponseBody
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 abstract class BaseFragment<VB: ViewBinding, VM: ViewModel>: Fragment() {
 
-    @Inject lateinit var taskPlannerRepository: TaskPlannerRepository
-    @Inject lateinit var taskPlannerDataStore: TaskPlannerDataStore
+    @Inject lateinit var authRepository: AuthRepository
     @Inject lateinit var gson: Gson
+    @Inject lateinit var userRepository: UserRepository
 
     private var _binding: VB? = null
     protected val binding get() = _binding!!
     protected val viewModel: VM by lazy {
-        val viewModelFactory = ViewModelFactory(taskPlannerRepository, taskPlannerDataStore)
+        val viewModelFactory = ViewModelFactory(authRepository, userRepository)
         ViewModelProvider(this, viewModelFactory).get(bindViewModel())
     }
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.ben.taskplanner.repository.UserRepository
 import com.ben.taskplanner.util.TaskPlannerDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,9 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
-class SharedTokenViewModel @Inject constructor(private val taskPlannerDataStore: TaskPlannerDataStore): ViewModel() {
+class SharedTokenViewModel @Inject constructor(
+    private val taskPlannerDataStore: TaskPlannerDataStore
+    ): ViewModel() {
 
     fun writeAccessToken(accessToken: String) {
         viewModelScope.launch(Dispatchers.IO) {

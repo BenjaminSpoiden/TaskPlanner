@@ -6,7 +6,7 @@ import com.ben.taskplanner.network.TaskPlannerService
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
-class TaskPlannerRepository @Inject constructor(private val taskPlannerService: TaskPlannerService): BaseRepository() {
+class AuthRepository @Inject constructor(private val taskPlannerService: TaskPlannerService): BaseRepository() {
 
     suspend fun onCreateUser(userRequest: CreateUserModel) = callHandler {
         taskPlannerService.onCreateUser(userRequest)

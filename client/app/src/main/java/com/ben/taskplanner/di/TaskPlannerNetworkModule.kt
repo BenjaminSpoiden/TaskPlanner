@@ -1,6 +1,7 @@
 package com.ben.taskplanner.di
 
 import com.ben.taskplanner.network.TaskPlannerService
+import com.ben.taskplanner.util.HeadersProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -59,5 +60,9 @@ object TaskPlannerNetworkModule {
     @Singleton
     @Provides
     fun provideNetworkService(retrofit: Retrofit): TaskPlannerService = retrofit.create(TaskPlannerService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideHeaders(): HeadersProvider = HeadersProvider()
 
 }

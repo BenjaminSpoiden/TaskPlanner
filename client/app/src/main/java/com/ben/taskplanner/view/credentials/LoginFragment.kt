@@ -13,7 +13,7 @@ import com.ben.taskplanner.R
 import com.ben.taskplanner.databinding.FragmentLoginBinding
 import com.ben.taskplanner.model.ResponseHandler
 import com.ben.taskplanner.model.user.LoginUserModel
-import com.ben.taskplanner.model.user.UserResponse
+import com.ben.taskplanner.model.user.AuthResponse
 import com.ben.taskplanner.view.BaseFragment
 import com.ben.taskplanner.view.SharedTokenViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,11 +69,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         viewModel.response.observe(viewLifecycleOwner) {
             when(it) {
                 is ResponseHandler.SuccessResponse -> {
-                    sharedTokenViewModel.writeAccessToken(it.response.user)
+                    sharedTokenViewModel.writeAccessToken(it.response.user!!)
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 }
                 is ResponseHandler.FailureResponse -> {
-                    val failureResponse = onConvertResponseToModelClass<UserResponse>(it.responseBody)
+                    val failureResponse = onConvertResponseToModelClass<AuthResponse>(it.responseBody)
                     failureResponse?.error?.let { errorResponse ->
                         if(errorResponse.toString().contains("passwords")) {
                             binding.passwordInput.error = errorResponse.toString()

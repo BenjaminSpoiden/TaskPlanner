@@ -5,6 +5,7 @@ data class User(
     val email: String,
     val password: String,
     val name: String,
+    val avatar: String?,
     val surname: String,
     val createdAt: String,
     val updatedAt: String

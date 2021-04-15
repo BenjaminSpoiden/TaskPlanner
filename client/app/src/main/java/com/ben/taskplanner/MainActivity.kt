@@ -2,25 +2,15 @@ package com.ben.taskplanner
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.ben.taskplanner.util.TaskPlannerDataStore
 import com.ben.taskplanner.view.SharedTokenViewModel
-import com.ben.taskplanner.view.my_task.MyTaskViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -38,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
 
         sharedTokenViewModel.readAccessToken().observe(this) { token ->
-            Log.d("Tag", "Token: $token")
             if(!token.isNullOrEmpty()) {
                 navGraph.startDestination = R.id.homeFragment
                 navController.graph = navGraph
@@ -48,7 +37,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
