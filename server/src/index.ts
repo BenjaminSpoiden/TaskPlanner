@@ -16,6 +16,7 @@ const main = async () => {
 
     await createConnection()
 
+    
     app.get("/", (_, res) => {
         res.send({response: "Hello Server"})
     })
