@@ -44,6 +44,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
             ))
             loginResponse()
         }
+
+        binding.createAccount.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+
+        binding.forgotPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+        }
     }
 
     private fun setInputs() {

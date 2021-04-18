@@ -1,17 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.TaskPlanner" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.TaskPlanner" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue</item>
-        <item name="colorPrimaryVariant">@color/darker_blue</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/green_ish</item>
         <item name="colorSecondaryVariant">@color/darker_green_ish</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
+
+    </style>
+
+    <style name="passCodeButton" parent="Widget.MaterialComponents.Button" >
+        <item name="android:layout_width">62dp</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="cornerRadius">200dp</item>
+        <item name="backgroundTint">@color/isabeline</item>
+        <item name="android:textColor">@color/smoky_black</item>
+        <item name="android:fontFamily">@font/notosans_bold</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>
