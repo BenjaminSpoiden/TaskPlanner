@@ -1,7 +1,8 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import argon2 from "argon2"
 import { IsEmail, IsNotEmpty, MinLength } from "class-validator"
 import { UserResponse } from "../model/UserResponse";
+import { Task } from "./Task";
 
 @Entity("user")
 export class User extends BaseEntity {
@@ -31,6 +32,9 @@ export class User extends BaseEntity {
 
     @Column({nullable: true})
     avatar?: string
+
+    @OneToMany(() => Task, task => task.creator)
+    tasks: Task[]
 
     @CreateDateColumn({name: "created_at"})
     createdAt: Date
