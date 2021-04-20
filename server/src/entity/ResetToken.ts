@@ -11,7 +11,7 @@ export class ResetToken extends BaseEntity {
     email: string
 
     @Column()
-    token: number
+    token: string
 
     @Column({name: "expire_at"})
     expireAt: Date

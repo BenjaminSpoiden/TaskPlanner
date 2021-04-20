@@ -2,14 +2,18 @@ import { Request, Response } from "express"
 import { getConnection } from "typeorm"
 import { ResetToken } from "../../entity/ResetToken"
 import { User } from "../../entity/User"
-import mailgun from "mailgun-js"
 import nodemailer from "nodemailer"
-
+import dayjs from "dayjs"
 
 export const forgotPassword = async(req: Request, res: Response) => {
 
-    //@ts-ignore
-    var mailGun = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN })
+   
+    const { email } = req.body
+    console.log("email", email)
+    const currentUser = await User.findOne({ email })
+
+    if(!currentUser) return res.status(401).json({message: "Email doesn't exist."})
+
 
     const testAccount = await nodemailer.createTestAccount()
 
@@ -23,10 +27,7 @@ export const forgotPassword = async(req: Request, res: Response) => {
         }
     })
 
-    const { email } = req.body
-    const currentUser = User.findOne({ email })
 
-    if(!currentUser) return res.status(201).json({message: "OK"})
 
     await getConnection()
         .createQueryBuilder()
@@ -37,14 +38,17 @@ export const forgotPassword = async(req: Request, res: Response) => {
         .where("email = :email", { email })
         .execute()
 
-    var token = Math.floor(Math.random() * 999999) + 10000;
+    var token = Math.floor(Math.random() * 99999) + 111111;
 
-    var expireAt = new Date()
-    expireAt.setDate(expireAt.getDate() + 1 / 24)
+
+    var now = dayjs()
+    console.log("now: ", now)
+    var expireAt = now.add(2, "minute")
+    console.log("expire:" , expireAt)
 
     await ResetToken.create({
         email,
-        token,
+        token: token.toString(),
         expireAt,
         used: false
     }).save()
