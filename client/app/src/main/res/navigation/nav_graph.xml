@@ -49,7 +49,7 @@
         tools:layout="@layout/fragment_quick_note" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.ben.taskplanner.view.credentials.LoginFragment"
+        android:name="com.ben.taskplanner.view.credentials.login.LoginFragment"
         android:label="Login into TaskPlanner"
         tools:layout="@layout/fragment_login">
         <action
@@ -72,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.ben.taskplanner.view.credentials.RegisterFragment"
+        android:name="com.ben.taskplanner.view.credentials.register.RegisterFragment"
         android:label="Create an account to TaskPlanner"
         tools:layout="@layout/fragment_register">
         <action
@@ -139,29 +139,50 @@
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.ben.taskplanner.view.credentials.ForgotPasswordFragment"
+        android:name="com.ben.taskplanner.view.credentials.forgot_password.ForgotPasswordFragment"
         android:label="Forgot Password"
         tools:layout="@layout/fragment_forgot_password">
         <action
             android:id="@+id/action_forgotPasswordFragment_to_verificationCodeFragment"
-            app:destination="@id/verificationCodeFragment" />
+            app:destination="@id/verificationCodeFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
-        android:name="com.ben.taskplanner.view.credentials.ResetPasswordFragment"
+        android:name="com.ben.taskplanner.view.credentials.reset_password.ResetPasswordFragment"
         android:label="Reset Your Password"
         tools:layout="@layout/fragment_reset_password">
         <action
             android:id="@+id/action_resetPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <argument
+            android:name="resetPasswordParcelModel"
+            app:argType="com.ben.taskplanner.model.ResetPasswordParcelModel" />
     </fragment>
     <fragment
         android:id="@+id/verificationCodeFragment"
-        android:name="com.ben.taskplanner.view.credentials.VerificationCodeFragment"
+        android:name="com.ben.taskplanner.view.credentials.verification_code.VerificationCodeFragment"
         android:label="Verification Code"
         tools:layout="@layout/fragment_verification_code">
         <action
             android:id="@+id/action_verificationCodeFragment_to_resetPasswordFragment"
-            app:destination="@id/resetPasswordFragment" />
+            app:destination="@id/resetPasswordFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_verificationCodeFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
 </navigation>

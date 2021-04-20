@@ -1,4 +1,4 @@
-package com.ben.taskplanner.view.credentials
+package com.ben.taskplanner.view.credentials.login
 
 import android.os.Bundle
 import android.util.Log

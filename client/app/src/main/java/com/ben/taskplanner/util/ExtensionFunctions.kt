@@ -1,8 +1,10 @@
 package com.ben.taskplanner.util
 
+import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 
 object ExtensionFunctions {
 
@@ -13,5 +15,15 @@ object ExtensionFunctions {
                 removeObserver(this)
             }
         })
+    }
+
+    fun View.makeSnackBar(message: String, actionName: String? = null, action: (() -> Unit)? = null) {
+        val snackBar = Snackbar.make(this, message, Snackbar.LENGTH_LONG)
+        action?.let {
+            snackBar.setAction(actionName) {
+                it()
+            }
+        }
+        snackBar.show()
     }
 }

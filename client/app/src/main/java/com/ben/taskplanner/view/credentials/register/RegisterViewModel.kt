@@ -1,6 +1,5 @@
-package com.ben.taskplanner.view.credentials
+package com.ben.taskplanner.view.credentials.register
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

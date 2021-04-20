@@ -78,6 +78,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.verificationCodeFragment -> {
                     hideBottomBar()
                 }
+                R.id.resetPasswordFragment -> {
+                    hideBottomBar()
+                }
                 else -> {
                     showBottomBar()
                 }

@@ -7,7 +7,7 @@
     <data>
         <variable
             name="verificationCodeViewModel"
-            type="com.ben.taskplanner.view.credentials.VerificationCodeViewModel" />
+            type="com.ben.taskplanner.view.credentials.verification_code.VerificationCodeViewModel" />
     </data>
 
     <ScrollView

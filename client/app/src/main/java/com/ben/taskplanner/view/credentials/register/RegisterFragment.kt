@@ -1,15 +1,13 @@
-package com.ben.taskplanner.view.credentials
+package com.ben.taskplanner.view.credentials.register
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.ben.taskplanner.R
 import com.ben.taskplanner.databinding.FragmentRegisterBinding
 import com.ben.taskplanner.model.ResponseHandler
 import com.ben.taskplanner.model.user.AuthResponse

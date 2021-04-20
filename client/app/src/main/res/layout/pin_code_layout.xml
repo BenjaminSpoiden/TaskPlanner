@@ -124,6 +124,7 @@
                 app:cornerRadius="100dp"
                 android:fontFamily="@font/notosans_bold"
                 android:text="OK"
+                android:textColor="@color/isabeline"
                 android:enabled="@{buttonState}"
                 android:onClick="@{() -> numPadListener.onValidate()}"
                 />
