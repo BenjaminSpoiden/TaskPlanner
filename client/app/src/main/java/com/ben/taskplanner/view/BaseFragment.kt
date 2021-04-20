@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.ben.taskplanner.repository.AuthRepository
+import com.ben.taskplanner.repository.TaskRepository
 import com.ben.taskplanner.repository.UserRepository
 import com.ben.taskplanner.util.TaskPlannerDataStore
 import com.google.gson.Gson
@@ -20,11 +21,11 @@ abstract class BaseFragment<VB: ViewBinding, VM: ViewModel>: Fragment() {
     @Inject lateinit var authRepository: AuthRepository
     @Inject lateinit var gson: Gson
     @Inject lateinit var userRepository: UserRepository
-
+    @Inject lateinit var taskRepository: TaskRepository
     private var _binding: VB? = null
     protected val binding get() = _binding!!
     protected val viewModel: VM by lazy {
-        val viewModelFactory = ViewModelFactory(authRepository, userRepository)
+        val viewModelFactory = ViewModelFactory(authRepository, userRepository, taskRepository)
         ViewModelProvider(this, viewModelFactory).get(bindViewModel())
     }
 

@@ -3,6 +3,7 @@ package com.ben.taskplanner.network
 import com.ben.taskplanner.model.ForgotPasswordRequest
 import com.ben.taskplanner.model.ResetPasswordModel
 import com.ben.taskplanner.model.ResetPasswordResponse
+import com.ben.taskplanner.model.task.TaskResponse
 import com.ben.taskplanner.model.user.CreateUserModel
 import com.ben.taskplanner.model.user.LoginUserModel
 import com.ben.taskplanner.model.user.AuthResponse
@@ -39,4 +40,8 @@ interface TaskPlannerService {
         @Query("email") email: String,
         @Body resetPasswordModel: ResetPasswordModel
     ): ResetPasswordResponse
+
+    // *** -- Tasks -- ***
+    @GET("/tasks")
+    suspend fun fetchTasks(@HeaderMap authHeaders: AuthenticatedHeaders): TaskResponse
 }
