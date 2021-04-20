@@ -20,5 +20,11 @@
     <string name="placeholderimage">placeholderImage</string>
     <string name="add_a_new_task">Add a new task</string>
     <string name="update_an_existing_task">Update an existing task</string>
-    <string name="create_account">Create an account on TaskPlanner</string>
+    <string name="create_account">Create an account</string>
+    <string name="forgot_password_desc">Enter the email associated with your account and we will send an email with instructions to reset your password.</string>
+    <string name="send_instructions">Send instructions</string>
+    <string name="digit_code_6">We sent you an email containing a 6-digit verification code.</string>
+    <string name="sending_an_email">Sending an email…</string>
+    <string name="different_password">The password must be different from the you already choose.</string>
+    <string name="change_your_password">Change your password</string>
 </resources>

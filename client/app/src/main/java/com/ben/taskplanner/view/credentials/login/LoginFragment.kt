@@ -1,4 +1,4 @@
-package com.ben.taskplanner.view.credentials
+package com.ben.taskplanner.view.credentials.login
 
 import android.os.Bundle
 import android.util.Log
@@ -43,6 +43,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
                 binding.passwordInput.editText?.text.toString(),
             ))
             loginResponse()
+        }
+
+        binding.createAccount.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+
+        binding.forgotPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
         }
     }
 

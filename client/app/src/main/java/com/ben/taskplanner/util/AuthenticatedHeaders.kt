@@ -1,18 +1,14 @@
 package com.ben.taskplanner.util
 
-import javax.inject.Singleton
-
+typealias Headers = HashMap<String, String>
 
 class AuthenticatedHeaders: Headers()
 
 class HeadersProvider {
 
     companion object {
-        private const val ACCEPT_LANGUAGE = "Accept-Language"
-        private const val USER_AGENT = "User-Agent"
         private const val AUTHORIZATION = "Authorization"
-        private const val HEADER_ACCEPT = "Accept"
-
+        private const val VERIFICATION_TOKEN = "Verification-Token"
     }
 
 
@@ -23,6 +19,12 @@ class HeadersProvider {
             }
         }
     }
-}
 
-open class Headers: HashMap<String, String>()
+    fun getVerificationToken(verificationToken: String?): AuthenticatedHeaders {
+        return AuthenticatedHeaders().apply {
+            verificationToken?.let {
+                put(VERIFICATION_TOKEN, it)
+            }
+        }
+    }
+}

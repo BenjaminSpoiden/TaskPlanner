@@ -23,4 +23,10 @@
     <color name="green_blue_crayola">#228CDB</color>
     <color name="teal_blue">#0B7189</color>
     <color name="xiketic">#170A1C</color>
+
+    <color name="smoky_black">#0F0E07</color>
+    <color name="black_chocolate">#181611</color>
+    <color name="jet">#363532</color>
+    <color name="nickel">#75746F</color>
+    <color name="isabeline">#F7F6F3</color>
 </resources>

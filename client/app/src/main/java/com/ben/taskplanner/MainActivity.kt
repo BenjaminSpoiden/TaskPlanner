@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -15,16 +18,19 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val navController by lazy { findNavController(R.id.fragment) }
+    private val navHostFragment: NavHostFragment by lazy {
+        supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+    }
+    private val navController by lazy { navHostFragment.findNavController() }
     private val bottomNavigationView: BottomNavigationView by lazy { findViewById(R.id.bottomNavView) }
     private val sharedTokenViewModel: SharedTokenViewModel by viewModels()
+    private val customToolbar: Toolbar by lazy { findViewById(R.id.custom_toolbar) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(customToolbar)
         bottomNavBarConfig()
-        supportActionBar?.elevation = 0F
-
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
 
         sharedTokenViewModel.readAccessToken().observe(this) { token ->
@@ -43,13 +49,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bottomNavBarConfig() {
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.homeFragment,
-            R.id.taskMenuFragment,
-            R.id.quickNoteFragment,
-            R.id.profileFragment,
-            R.id.credentialsFragment
-        ))
+        val appBarConfiguration = AppBarConfiguration(
+            topLevelDestinationIds = setOf(
+                R.id.homeFragment,
+                R.id.taskMenuFragment,
+                R.id.quickNoteFragment,
+                R.id.profileFragment,
+                R.id.credentialsFragment
+            )
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNavigationView.setupWithNavController(navController)
 
@@ -62,6 +70,15 @@ class MainActivity : AppCompatActivity() {
                     hideBottomBar()
                 }
                 R.id.registerFragment -> {
+                    hideBottomBar()
+                }
+                R.id.forgotPasswordFragment -> {
+                    hideBottomBar()
+                }
+                R.id.verificationCodeFragment -> {
+                    hideBottomBar()
+                }
+                R.id.resetPasswordFragment -> {
                     hideBottomBar()
                 }
                 else -> {
